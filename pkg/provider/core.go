@@ -128,6 +128,12 @@ func (p *Provider) CreateMachine(ctx context.Context, req *driver.CreateMachineR
 		OS:             providerSpec.OS,
 		ProjectSSHKeys: providerSpec.SSHKeys,
 		Tags:           providerSpec.Tags,
+		IPAddresses: []packngo.IPAddressCreateRequest{
+			{
+				AddressFamily: 4,
+				Public:        false,
+			},
+		},
 	}
 	klog.V(3).Infof("will create machine with request %#v, reservation IDs %v, reservedOnly %v", createRequest, providerSpec.ReservationIDs, providerSpec.ReservedOnly)
 	device, err := createDeviceWithReservations(svc, createRequest, providerSpec.ReservationIDs, providerSpec.ReservedOnly)
